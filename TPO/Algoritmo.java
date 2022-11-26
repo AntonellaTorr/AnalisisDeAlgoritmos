@@ -39,10 +39,12 @@ public class Algoritmo
             for (j = 0; j < N; j++)
                 if (!proponenteEmparejado[j])
                     break;
- 
+                    System.out.println( "PROPONENTE "+ j);
             for (int i = 0; i < N && !proponenteEmparejado[j]; i++)
             {
+               
                 int indice = propuestoObtenerIndice(proponentePref[j][i]);
+                System.out.println("EL PROPONENTE BUSCADO ES :"+ proponentePref[j][i].toString() );
                 if (propuestoPareja[indice] == null)
                 {
                     propuestoPareja[indice] = proponente[j];
@@ -79,18 +81,20 @@ public class Algoritmo
     /** get men index **/
     private int proponenteObtenerIndice(String str)
     {
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < N; i++){
             if (proponente[i].equals(str))
                 return i;
+        }
         return -1;
     }
     /** get women index **/
     private int propuestoObtenerIndice(String str)
     {
-       
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < N; i++){
+          
             if (propuesto[i].equals(str))
                 return i;
+        }
         return -1;
     }
     /** print couples **/
@@ -109,7 +113,7 @@ public class Algoritmo
         String[] r= new String[n];
         for (int i=0;i<n;i++){
             
-            r[i]= "R" +(i+1);
+            r[i]= "R" +(i);
         }
         return r;
     }
@@ -117,7 +121,7 @@ public class Algoritmo
         String[] emp= new String[n];
         for (int i=0;i<n;i++){
             
-            emp[i]= "E" +(i+1);
+            emp[i]= "E" +(i);
         }
         return emp;
     }
@@ -145,7 +149,6 @@ public class Algoritmo
             System.out.println("Emp "+i);
             ArrayList a=generarSinRepetidos(n, i);
             for (int j=0;j<n;j++){
-             
                 empPref[i][j]="R" +a.get(j).toString();
                 System.out.print(empPref[i][j].toString() +" ");
             }
@@ -159,11 +162,10 @@ public class Algoritmo
     public static ArrayList generarSinRepetidos(int n, int p){
         ArrayList a= new ArrayList<>();
         Random r= new Random();
-        while (a.size()<n){
-            int j=r.nextInt(n+1);
-            //controla que no se ponga a si mismo 
-            while (a.contains(j) && j==p){
-                j=r.nextInt(n+1);
+        while (a.size()<n ){
+            int j=r.nextInt(n);
+            while (a.contains(j)){
+                j=r.nextInt(n);
             }
             a.add(j);
         }
@@ -188,10 +190,10 @@ public class Algoritmo
 
         if (i==1){
             proponente= generarEmpleados(n);
-             propuesto=generarRubros(n);
-             propPref=empleadosPreferencia(n);
+            propuesto=generarRubros(n);
+            propPref=empleadosPreferencia(n);
           
-             propuestoPref= rubrosPreferencia(n);
+            propuestoPref= rubrosPreferencia(n);
 
         }
         else{
