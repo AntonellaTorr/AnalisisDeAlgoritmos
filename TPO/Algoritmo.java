@@ -30,9 +30,7 @@ public class Algoritmo
     }
     /** function to calculate all matches **/
 
-    private void esElMejor(){
-        
-    }
+  
     private void calcMatches()
     {
         while (cantEmparejados < N)
@@ -89,6 +87,7 @@ public class Algoritmo
     /** get women index **/
     private int propuestoObtenerIndice(String str)
     {
+       
         for (int i = 0; i < N; i++)
             if (propuesto[i].equals(str))
                 return i;
@@ -126,11 +125,14 @@ public class Algoritmo
        
         String [][] rPref= new String [n][n];
         for (int i=0;i<n;i++){
-            ArrayList a=generarSinRepetidos(n);
+            System.out.println("Rub "+i);
+            ArrayList a=generarSinRepetidos(n, i);
             for (int j=0;j<n;j++){
              
-                rPref[i][j]="Emp" +(String) a.get(j);
+                rPref[i][j]="E" + a.get(j).toString();
+                System.out.print(rPref[i][j].toString()+ " ");
             }
+            System.out.println("");
            
 
         }
@@ -140,22 +142,27 @@ public class Algoritmo
        
         String [][] empPref= new String [n][n];
         for (int i=0;i<n;i++){
-            ArrayList a=generarSinRepetidos(n);
+            System.out.println("Emp "+i);
+            ArrayList a=generarSinRepetidos(n, i);
             for (int j=0;j<n;j++){
              
-                empPref[i][j]="R" +(String) a.get(j);
+                empPref[i][j]="R" +a.get(j).toString();
+                System.out.print(empPref[i][j].toString() +" ");
             }
+            System.out.println("");
            
 
         }
+        System.out.println("---------------------------------------------------------------------------");
         return  empPref;
     }
-    public static ArrayList generarSinRepetidos(int n){
+    public static ArrayList generarSinRepetidos(int n, int p){
         ArrayList a= new ArrayList<>();
         Random r= new Random();
         while (a.size()<n){
             int j=r.nextInt(n+1);
-            while (a.contains(j)){
+            //controla que no se ponga a si mismo 
+            while (a.contains(j) && j==p){
                 j=r.nextInt(n+1);
             }
             a.add(j);
@@ -183,6 +190,7 @@ public class Algoritmo
             proponente= generarEmpleados(n);
              propuesto=generarRubros(n);
              propPref=empleadosPreferencia(n);
+          
              propuestoPref= rubrosPreferencia(n);
 
         }
@@ -195,6 +203,7 @@ public class Algoritmo
 
         }
        
+
  
         Algoritmo gs = new Algoritmo(proponente, propuesto, propPref, propuestoPref);                        
     }
