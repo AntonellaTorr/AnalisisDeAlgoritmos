@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
 public class Algoritmo
 
 {
@@ -101,27 +105,97 @@ public class Algoritmo
     }
 
     /** main function **/
+
+    public static String [] generarRubros(int n){
+        String[] r= new String[n];
+        for (int i=0;i<n;i++){
+            
+            r[i]= "R" +(i+1);
+        }
+        return r;
+    }
+    public static String [] generarEmpleados(int n){
+        String[] emp= new String[n];
+        for (int i=0;i<n;i++){
+            
+            emp[i]= "E" +(i+1);
+        }
+        return emp;
+    }
+    public static String [][] rubrosPreferencia (int n){
+       
+        String [][] rPref= new String [n][n];
+        for (int i=0;i<n;i++){
+            ArrayList a=generarSinRepetidos(n);
+            for (int j=0;j<n;j++){
+             
+                rPref[i][j]="Emp" +(String) a.get(j);
+            }
+           
+
+        }
+        return rPref;
+    }
+    public static String [][] empleadosPreferencia (int n){
+       
+        String [][] empPref= new String [n][n];
+        for (int i=0;i<n;i++){
+            ArrayList a=generarSinRepetidos(n);
+            for (int j=0;j<n;j++){
+             
+                empPref[i][j]="R" +(String) a.get(j);
+            }
+           
+
+        }
+        return  empPref;
+    }
+    public static ArrayList generarSinRepetidos(int n){
+        ArrayList a= new ArrayList<>();
+        Random r= new Random();
+        while (a.size()<n){
+            int j=r.nextInt(n+1);
+            while (a.contains(j)){
+                j=r.nextInt(n+1);
+            }
+            a.add(j);
+        }
+        return a;
+
+    }
+    
     public static void main(String[] args) 
     {
-        System.out.println("Gale Shapley Marriage Algorithm\n");
-        /** list of men **/
-        String[] m = {"M1", "M2", "M3", "M4", "M5"};
-        /** list of women **/
-        String[] w = {"W1", "W2", "W3", "W4", "W5"};
+       
+        Scanner leer= new Scanner(System.in);
+        System.out.println(" Ingrese el n");
+        int n=leer.nextInt();
+        System.out.println("Ingrese 1 sea desea priorizar la motivacion de los empleados o 2 si prefiere priorizar la distribucion de recursos humanos");
+        int i=leer.nextInt();
+        //motivacion proponentes empleados
+        //distribucion proponentes rubbros
+        String [] proponente= new String [n];
+        String [] propuesto= new String [n];
+        String [][]propPref= new String [n][n];
+        String [][]propuestoPref= new String [n][n];
+
+        if (i==1){
+            proponente= generarEmpleados(n);
+             propuesto=generarRubros(n);
+             propPref=empleadosPreferencia(n);
+             propuestoPref= rubrosPreferencia(n);
+
+        }
+        else{
+            proponente= generarRubros(n);
+            propuesto=generarEmpleados(n);
+            propPref= rubrosPreferencia(n);
+            propuestoPref=empleadosPreferencia(n);
+       
+
+        }
+       
  
-        /** men preference **/
-        String[][] mp = {{"W5", "W2", "W3", "W4", "W1"}, 
-                         {"W2", "W5", "W1", "W3", "W4"}, 
-                         {"W4", "W3", "W2", "W1", "W5"}, 
-                         {"W1", "W2", "W3", "W4", "W5"},
-                         {"W5", "W2", "W3", "W4", "W1"}};
-        /** women preference **/                      
-        String[][] wp = {{"M5", "M3", "M4", "M1", "M2"}, 
-                         {"M1", "M2", "M3", "M5", "M4"}, 
-                         {"M4", "M5", "M3", "M2", "M1"},
-                         {"M5", "M2", "M1", "M4", "M3"}, 
-                         {"M2", "M1", "M4", "M3", "M5"}};
- 
-        Algoritmo gs = new Algoritmo(m, w, mp, wp);                        
+        Algoritmo gs = new Algoritmo(proponente, propuesto, propPref, propuestoPref);                        
     }
 }
