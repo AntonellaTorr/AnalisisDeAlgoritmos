@@ -14,6 +14,7 @@ public class Algoritmo
     private String[] propuesto;
     private String[] propuestoPareja;
     private boolean[] proponenteEmparejado;
+    private ArrayList propuestosPerfectos;
 
     /** Constructor **/
     public Algoritmo(String[] m, String[] w, String[][] mp, String[][] wp) {
@@ -25,33 +26,58 @@ public class Algoritmo
         propuestoPref = wp;
         proponenteEmparejado = new boolean[N];
         propuestoPareja = new String[N];
+        propuestosPerfectos= new ArrayList<>();
         calcMatches();
     }
 
     /** function to calculate all matches **/
+    private void verificarParejaPerfecta(String proponente,String propuesto, int indice){
+        //si el propuesto tiene en primer lugar al proponente es decir es el primero que prefiere lo agrega a la lista
+        System.out.println("VERIFICANDO PAREJA PERFECTA");
+        System.out.println(" Propuesto "+ propuesto);
+        System.out.println(" Proponente "+ proponente);
+        System.out.println(" Primero en la lista de propeusto "+ propuestoPref[indice][0]);
+        if (propuestoPref[indice][0].equals(proponente) ){
+            System.out.println(propuesto + " acepto propuesta y es pareja perfecta ");
+            propuestosPerfectos.add(propuesto);
+        }
+       
 
+    }
     private void calcMatches() {
         while (cantEmparejados < N) {
             int j;
             for (j = 0; j < N; j++)
                 if (!proponenteEmparejado[j])
                     break;
+                System.out.println("PROPONENTE "+ proponente[j]);
             for (int i = 0; i < N && !proponenteEmparejado[j]; i++) {
+                System.out.println("Le pregunta a "+ proponentePref[j][i]);
 
                 int indice = propuestoObtenerIndice(proponentePref[j][i]);
-                if (propuestoPareja[indice] == null) {
-                    propuestoPareja[indice] = proponente[j];
-                    proponenteEmparejado[j] = true;
-                    cantEmparejados++;
+                //si el propuesto no tiene a su pareja perfecta entonces pregunta 
+                if (!propuestosPerfectos.contains(propuesto)){
 
-                } else {
-                    String parejaActual = propuestoPareja[indice];
-                    if (mayorPreferencia(parejaActual, proponente[j], indice)) {
+                    if (propuestoPareja[indice] == null) {
                         propuestoPareja[indice] = proponente[j];
                         proponenteEmparejado[j] = true;
-                        proponenteEmparejado[proponenteObtenerIndice(parejaActual)] = false;
+                        cantEmparejados++;
+                        System.out.println(proponentePref[j][i] + " acepto propuesta ");
+                        this.verificarParejaPerfecta(proponente[j], proponentePref[j][i], indice);
+    
+                    } else {
+                        String parejaActual = propuestoPareja[indice];
+                        if (mayorPreferencia(parejaActual, proponente[j], indice)) {
+                            propuestoPareja[indice] = proponente[j];
+                            proponenteEmparejado[j] = true;
+                            proponenteEmparejado[proponenteObtenerIndice(parejaActual)] = false;
+                            System.out.println(proponentePref[j][i] + " acepto propuesta ");
+                            this.verificarParejaPerfecta(proponente[j], proponentePref[j][i], indice);
+
+                        }
                     }
                 }
+               
             }
         }
         mostrarEmparejamiento();
@@ -130,6 +156,8 @@ public class Algoritmo
             System.out.println("");
 
         }
+        
+        System.out.println("---------------------------------------------------------------------------");
         return rPref;
     }
 
@@ -146,6 +174,7 @@ public class Algoritmo
             System.out.println("");
 
         }
+        
         System.out.println("---------------------------------------------------------------------------");
         return empPref;
     }
@@ -160,7 +189,6 @@ public class Algoritmo
             }
             a.add(j);
         }
-        System.out.println("---------------------------------------------------------------------------");
         return a;
 
     }
