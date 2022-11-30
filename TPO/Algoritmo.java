@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class Algoritmo
 
 {
-    // proponente HOMBRE
-    // propuesto MUJER
+  
     private int N, cantEmparejados;
     private String[][] proponentePref;
     private String[][] propuestoPref;
@@ -16,7 +15,7 @@ public class Algoritmo
     private boolean[] proponenteEmparejado;
     private ArrayList propuestosPerfectos;
 
-    /** Constructor **/
+   
     public Algoritmo(String[] m, String[] w, String[][] mp, String[][] wp) {
         N = mp.length;
         cantEmparejados = 0;
@@ -30,7 +29,7 @@ public class Algoritmo
         calcMatches();
     }
 
-    /** function to calculate all matches **/
+  
     private void verificarParejaPerfecta(String proponente,String propuesto, int indice){
         //si el propuesto tiene en primer lugar al proponente es decir es el primero que prefiere lo agrega a la lista
         System.out.println("VERIFICANDO PAREJA PERFECTA");
@@ -116,7 +115,7 @@ public class Algoritmo
         return -1;
     }
 
-    /** print couples **/
+    /** imprimir parejas **/
     public void mostrarEmparejamiento() {
         System.out.println("Emparejados : ");
         for (int i = 0; i < N; i++) {
@@ -193,7 +192,34 @@ public class Algoritmo
 
     }
 
+    public static void main2 (){
+        System.out.println("Gale Shapley Marriage Algorithm\n");
+        /** proponentes **/
+        String[] m = {"M1", "M2", "M3", "M4", "M5"};
+        /*propuestos **/
+        String[] w = {"W1", "W2", "W3", "W4", "W5"};
+ 
+        /** men preference **/
+        String[][] mp = {{"W5", "W2", "W3", "W4", "W1"}, 
+                         {"W2", "W5", "W1", "W3", "W4"}, 
+                         {"W4", "W3", "W2", "W1", "W5"}, 
+                         {"W1", "W2", "W3", "W4", "W5"},
+                         {"W5", "W2", "W3", "W4", "W1"}};
+        /** women preference **/                      
+        String[][] wp = {{"M5", "M3", "M4", "M1", "M2"}, 
+                         {"M1", "M2", "M3", "M5", "M4"}, 
+                         {"M4", "M5", "M3", "M2", "M1"},
+                         {"M5", "M2", "M1", "M4", "M3"}, 
+                         {"M2", "M1", "M4", "M3", "M5"}};
+ 
+        Algoritmo gs = new Algoritmo(m, w, mp, wp);     
+        System.out.println(" Respuesta Esperada M4 W1, M2 W2, M5 W3, M3 W4, M1 W5 ");
+          
+    }
     public static void main(String[] args) {
+        main2();
+
+        /*
 
         Scanner leer = new Scanner(System.in);
         System.out.println(" Ingrese el n");
@@ -223,6 +249,6 @@ public class Algoritmo
 
         }
 
-        Algoritmo gs = new Algoritmo(proponente, propuesto, propPref, propuestoPref);
+        Algoritmo gs = new Algoritmo(proponente, propuesto, propPref, propuestoPref);*/
     }
 }
